@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const cartItem = new mongoose.Schema({
         key: {
@@ -39,14 +40,23 @@ const userInfo = new mongoose.Schema({
 }, {_id : false});
 
 const orderInfo = new mongoose.Schema({
+        OrderNo : {
+                type : Number,
+        },
         CartItems: [cartItem],
         TotalValue: {
                 type : Number,
                 required : true
         },
-        UserDetails: userInfo
+        UserDetails: userInfo,
+        State: {
+                type : Number,
+                default: 1,
+                required : true
+        }
 }, { collection: 'Orders' });
 
+orderInfo.plugin(AutoIncrement, {inc_field : 'OrderNo'});
 const Orders = mongoose.model('Orders', orderInfo);
 
 module.exports = Orders;

@@ -8,7 +8,7 @@ const app = express();
 
 connectDB();
 const corsOptions = {
-	origin: 'http://localhost:3000', // Your frontend's origin
+	origin: 'http://localhost:3000',
 	optionsSuccessStatus: 200
 };
 app.use(cors(corsOptions));
