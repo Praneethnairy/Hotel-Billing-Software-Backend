@@ -36,10 +36,18 @@ const userInfo = new mongoose.Schema({
         Mode: {
                 type : String,
                 required : true
+        },
+        Payment: {
+                type : String,
+                required : true
         }
 }, {_id : false});
 
 const orderInfo = new mongoose.Schema({
+        Userid: {
+                type: String,
+                required: true
+        },
         OrderNo : {
                 type : Number,
         },
@@ -53,8 +61,19 @@ const orderInfo = new mongoose.Schema({
                 type : Number,
                 default: 1,
                 required : true
+        },
+        Date: {
+                type: Number,
+                required : true
         }
 }, { collection: 'Orders' });
+
+orderInfo.virtual('user', {
+        ref: 'User',
+        localField: 'Userid',
+        foreignField: 'id',
+        justOne: true
+});
 
 orderInfo.plugin(AutoIncrement, {inc_field : 'OrderNo'});
 const Orders = mongoose.model('Orders', orderInfo);

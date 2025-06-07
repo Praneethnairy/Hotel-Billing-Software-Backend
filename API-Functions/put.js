@@ -3,10 +3,11 @@ const Orders = require("../Models/NewOrder.js")
 const updateOrderState = async (req, res) => {
         try{
                 const reqData = req.body;
+                const userId = req.params.id;
                 const newState = reqData.State;
                 const orderNo = reqData.OrderNo;
                 const updatedOrder = await Orders.findOneAndUpdate(
-                        {OrderNo : orderNo},
+                        {Userid: userId, OrderNo : orderNo},
                         {$set : {State : newState}},
                         {new : true}
                 )

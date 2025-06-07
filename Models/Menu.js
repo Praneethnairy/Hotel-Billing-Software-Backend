@@ -19,12 +19,23 @@ const menuSchema = new mongoose.Schema({
         key: {
                 type : Number
         },
+        Userid: {
+                type: String,
+                required: true
+        },
         category: {
                 type : String,
                 required : true
         },
         items : [dishSchema]
 }, { collection: 'Menu' })
+
+menuSchema.virtual('user', {
+        ref: 'User',
+        localField: 'Userid',
+        foreignField: 'id',
+        justOne: true
+});
 
 const Menu = mongoose.model('Menu', menuSchema);
 
